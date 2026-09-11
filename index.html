@@ -190,6 +190,32 @@ body::before {
   padding: 4px 10px;
   border-radius: 20px;
 }
+.chase-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.chase-rect {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: dashChase 6.6s linear infinite;
+}
+.step-block:nth-child(1) .chase-rect { animation-delay: 0s; }
+.step-block:nth-child(2) .chase-rect { animation-delay: -4.4s; }
+.step-block:nth-child(3) .chase-rect { animation-delay: -2.2s; }
+@keyframes dashChase {
+  0%   { opacity: 0; stroke-dashoffset: var(--start-off, 0); }
+  2%   { opacity: 1; }
+  30%  { opacity: 1; stroke-dashoffset: var(--end-off, 0); }
+  32%  { opacity: 0; }
+  100% { opacity: 0; stroke-dashoffset: var(--end-off, 0); }
+}
 .step-num {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
@@ -379,6 +405,8 @@ src="https://www.facebook.com/tr?id=1316019647114072&ev=PageView&noscript=1"
     <div class="hero-tagline">Deviens l'athlète <em>complet</em> que tu rêves d'être.</div>
   </div>
 
+  <div style="width:64px;height:1px;background:rgba(255,255,255,0.85);margin:22px 0 6px"></div>
+
   <div class="method-eyebrow">La méthode Athlète Hybride</div>
   <div class="method-headline">3 étapes pour <em>tout</em> faire, sans jamais rien lâcher.</div>
   <div class="method-intro">Force, endurance et physique construits ensemble, avec un plan qui tient compte de ta vraie vie.</div>
@@ -389,17 +417,20 @@ src="https://www.facebook.com/tr?id=1316019647114072&ev=PageView&noscript=1"
       <div class="step-num">01</div>
       <div class="step-title">Pose les bases</div>
       <div class="step-sub">Le guide gratuit pour structurer ton programme, ta nutrition et ton mindset.</div>
+      <svg class="chase-svg" aria-hidden="true"><rect class="chase-rect"/></svg>
     </a>
     <a href="https://programme.athleteshybrides.fr/3moishybride" class="step-block">
       <div class="step-badge">-38% ce mois</div>
       <div class="step-num">02</div>
       <div class="step-title">Deviens polyvalent</div>
       <div class="step-sub">12 semaines guidées pour progresser en force, en cardio et en physique, à ton rythme.</div>
+      <svg class="chase-svg" aria-hidden="true"><rect class="chase-rect"/></svg>
     </a>
     <a href="https://questionnaire.athleteshybrides.fr/" class="step-block">
       <div class="step-num">03</div>
       <div class="step-title">Grimpe de catégorie</div>
       <div class="step-sub">Un coaching sur-mesure pour passer le cap suivant : compétition, record ou transformation.</div>
+      <svg class="chase-svg" aria-hidden="true"><rect class="chase-rect"/></svg>
     </a>
   </div>
 
@@ -475,5 +506,39 @@ src="https://www.facebook.com/tr?id=1316019647114072&ev=PageView&noscript=1"
     NASM CPT #1251426152 · Coach Nutrition #1251457041 · PES #1261864923
   </div>
 </div>
+<script>
+(function() {
+  function setupChase() {
+    document.querySelectorAll('.step-block').forEach(function(card) {
+      var svg = card.querySelector('.chase-svg');
+      var rect = card.querySelector('.chase-rect');
+      if (!svg || !rect) return;
+      var w = card.offsetWidth, h = card.offsetHeight;
+      if (!w || !h) return;
+      var r = 15, x = 1.5, y = 1.5, rw = w - 3, rh = h - 3;
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', rw);
+      rect.setAttribute('height', rh);
+      rect.setAttribute('rx', r);
+      rect.setAttribute('ry', r);
+      // SVG rect path starts at top-left, goes clockwise: top edge -> right edge -> bottom edge -> left edge.
+      var perimeter = 2 * (rw + rh) - 8 * r + 2 * Math.PI * r;
+      var topEdge = rw - 2 * r; // shift the start point to the top-right corner
+      var comet = perimeter * 0.16;
+      rect.style.strokeDasharray = comet + ' ' + (perimeter * 3);
+      rect.style.setProperty('--start-off', -topEdge);
+      rect.style.setProperty('--end-off', -(topEdge + perimeter));
+    });
+  }
+  window.addEventListener('load', setupChase);
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setupChase, 200);
+  });
+})();
+</script>
 </body>
 </html>
