@@ -52,7 +52,7 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
 }
 .avatar {
   width: 115px;
@@ -146,6 +146,29 @@ body::before {
   line-height: 1.6;
   max-width: 340px;
   margin: 0 auto 20px;
+}
+.steps-frame {
+  width: 100%;
+  position: relative;
+  border: 1px solid rgba(229,56,59,0.35);
+  border-radius: 22px;
+  padding: 22px 14px 14px;
+  margin: 4px 0 28px;
+  background: linear-gradient(180deg, rgba(229,56,59,0.07), transparent 45%);
+}
+.steps-frame-label {
+  position: absolute;
+  top: -11px;
+  left: 20px;
+  background: var(--black);
+  padding: 3px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  border: 1px solid rgba(229,56,59,0.4);
+  border-radius: 20px;
 }
 .steps-preview {
   width: 100%;
@@ -402,16 +425,17 @@ src="https://www.facebook.com/tr?id=1316019647114072&ev=PageView&noscript=1"
     </div>
     <div class="name">ALEX TOURNIER</div>
     <div class="badge-pill"><span class="dot"></span>Athlète Hybride · Coaching ouvert</div>
-    <div class="hero-tagline">Deviens l'athlète <em>complet</em> que tu rêves d'être.</div>
   </div>
 
-  <div style="width:64px;height:1px;background:rgba(255,255,255,0.85);margin:22px 0 6px"></div>
+  <div style="width:64px;height:1px;background:rgba(255,255,255,0.85);margin:8px 0 6px"></div>
 
   <div class="method-eyebrow">La méthode Athlète Hybride</div>
-  <div class="method-headline">3 étapes pour <em>tout</em> faire, sans jamais rien lâcher.</div>
+  <div class="method-headline">3 étapes pour devenir un <em>athlète complet</em> et changer à jamais ta manière de t'entraîner.</div>
   <div class="method-intro">Force, endurance et physique construits ensemble, avec un plan qui tient compte de ta vraie vie.</div>
 
-  <div class="steps-preview">
+  <div class="steps-frame">
+    <div class="steps-frame-label">Ton parcours</div>
+    <div class="steps-preview">
     <a href="https://programme.athleteshybrides.fr/ebook" class="step-block">
       <div class="step-badge">Gratuit</div>
       <div class="step-num">01</div>
@@ -432,6 +456,8 @@ src="https://www.facebook.com/tr?id=1316019647114072&ev=PageView&noscript=1"
       <div class="step-sub">Un coaching sur-mesure pour passer le cap suivant : compétition, record ou transformation.</div>
       <svg class="chase-svg" aria-hidden="true"><rect class="chase-rect"/></svg>
     </a>
+
+    </div>
   </div>
 
   <div class="links">
